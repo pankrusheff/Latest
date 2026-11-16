@@ -8,6 +8,8 @@ Personal Apple Silicon build based on upstream main, with fixes from:
 
 Original authors and license are preserved in Git history. This is an unofficial build.
 
+The upstream empty-version equality bug is also fixed: two identical unknown versions now compare equal, satisfying the existing parser regression test.
+
 ## Build
 
 Push the personal-build branch or run Latest Personal in GitHub Actions. The job runs all XCTest tests, builds a Release app for arm64, verifies the ad hoc signature, and uploads Latest-Personal-arm64.zip. Build/test logs are uploaded separately.

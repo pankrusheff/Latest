@@ -11,6 +11,14 @@ import XCTest
 
 class VersionTest: XCTestCase {
 
+	func testEmptyVersionsCompareEqual() {
+		let empty = Version(versionNumber: nil, buildNumber: nil)
+		XCTAssertEqual(empty, empty)
+		XCTAssertFalse(empty < empty)
+		XCTAssertFalse(empty > empty)
+	}
+
+
     func testInitialization() {
         // Simple test
 		var version = Version(versionNumber: "2.1.5", buildNumber: "215")
