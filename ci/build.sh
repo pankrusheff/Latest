@@ -13,7 +13,7 @@ app='dist/Latest Personal.app'
 ditto build/DerivedData/Build/Products/Release/Latest.app "$app"
 codesign --force --deep --sign - "$app"
 codesign --verify --deep --strict --verbose=2 "$app"
-lipo -verify_arch arm64 "$app/Contents/MacOS/Latest"
+lipo "$app/Contents/MacOS/Latest" -verify_arch arm64
 /usr/libexec/PlistBuddy -c 'Print :CFBundleIdentifier' "$app/Contents/Info.plist"
 ditto -c -k --sequesterRsrc --keepParent "$app" dist/Latest-Personal-arm64.zip
 shasum -a 256 dist/Latest-Personal-arm64.zip > dist/SHA256SUMS
