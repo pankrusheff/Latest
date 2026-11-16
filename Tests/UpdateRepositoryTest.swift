@@ -30,6 +30,15 @@ final class UpdateRepositoryTest: XCTestCase {
 		return UpdateRepository(entries: try! JSONDecoder().decode([UpdateRepository.Entry].self, from: Data(json.utf8)))
 	}()
 	
+	func testEmptyMinimumOSVersionDoesNotDiscardTheCatalog() throws {
+		let json = "[" + cask("first", name: "First", app: "First.app") + "," +
+			cask("second", name: "Second", app: "Second.app")
+				.replacingOccurrences(of: "\"depends_on\":{}", with: "\"depends_on\":{\"macos\":{\">=\":[\"\"]}}") + "]"
+		let entries = try JSONDecoder().decode([UpdateRepository.Entry].self, from: Data(json.utf8))
+		XCTAssertEqual(entries.count, 2)
+		XCTAssertNil(entries[1].minimumOSVersion)
+	}
+
 	private func bundle(_ file: String, id: String) -> App.Bundle {
 		App.Bundle(version: Version(versionNumber: "1", buildNumber: nil), name: file, bundleIdentifier: id, fileURL: URL(fileURLWithPath: "/Applications/\(file)"), source: .none)
 	}
